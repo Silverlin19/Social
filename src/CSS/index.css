@@ -1,27 +1,41 @@
 body {
   background-image: linear-gradient(
     to right,
-    #c04848 0%,
-    #480048 51%,
+    #e11b64ba 0%,
+    #5b0046 50%,
     #c04848 100%
   );
+  background-position: center;
 }
 
 body {
-  margin: 10px;
-  padding: 15px 45px;
   text-align: center;
-  text-transform: uppercase;
-  transition: 0.5s;
+  transition: 0.8s;
   background-size: 200% auto;
   color: white;
-  box-shadow: 0 0 20px #eee;
+}
+.logincard {
+  text-align: center;
+  box-shadow: 0 0 10px #eee;
   border-radius: 10px;
-  display: block;
 }
 
-body:hover {
-  background-position: right center; /* change the direction of the change here */
+.left-body {
+  background-position: left center; /* change the direction of the change here */
   color: #fff;
   text-decoration: none;
+}
+
+.right-body {
+  background-position: right center; /* change the direction of the change here */
+  text-decoration: none;
+}
+
+.log {
+  box-shadow: 0 0 10px #eee;
+  margin-top: 30%;
+  height: 300px;
+}
+.form-group {
+  margin: 5%;
 }
