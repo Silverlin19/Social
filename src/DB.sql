@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS `mydb`.`Account` (
+  `name` VARCHAR(1000) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  `bio` VARCHAR(45) NULL,
+  `twitter` VARCHAR(45) NULL,
+  `facebook` VARCHAR(45) NULL,
+  `instagram` VARCHAR(45) NULL,
+  `birthday` DATETIME NOT NULL,
+  PRIMARY KEY (`name`),
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
