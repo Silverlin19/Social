@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`account` (
   `facebook` VARCHAR(45) NULL,
   `instagram` VARCHAR(45) NULL,
   `birthday` DATETIME NOT NULL,
+  `pfp` VARCHAR(0) NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)

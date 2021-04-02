@@ -63,6 +63,34 @@ exports.accountDelete = async (req,res) => {
         })
 }
 
+//-------------------pfp Create/update-----------------------
+
+exports.pfpCreate = async (req,res) => {
+    knex('Account')
+        .insert({
+            'pfp': req.body.pfp,
+            
+        })
+        .then(() => {
+            res.json({
+                message: `${pfp} added successfully`,
+            })
+        })
+        .catch(err => {
+            res.json({
+            message: `there was an error creating ${req.body.pfp} ${err}`,
+})
+        })
+}
+
+exports.pfpUpdate = async (req,res) => {
+    knex('Account')
+        .where('id',req.body.id)
+        .update({
+            'pfp': req.body.pfp,
+        })
+}
+
 /*-------------------socials Create/update-----------------------
 might add reset feature to return to null values
 */
