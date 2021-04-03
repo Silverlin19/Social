@@ -4,7 +4,7 @@ const compression = require('compression')
 const cors = require('cors')
 const helmet = require('helmet')
 
-const ingredientsRouter = require('./routes/ingredients-route')
+const socialRouter = require('./routes/account-route')
 
 const PORT = process.env.PORT || 4001
 
@@ -16,11 +16,11 @@ app.use(compression())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
-app.use('/ingredient', ingredientsRouter)
+app.use('/', socialRouter)
 
 app.use(function(err,req,res,next) {
     console.error(err.stack)
-    res.status(500).send('something is broken')
+    res.status(500).send(`something is broken ${err}`)
 })
 
 app.use(function (req,res,next) {

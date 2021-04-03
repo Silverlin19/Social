@@ -197,13 +197,29 @@ exports.postCreate = async (req,res) => {
 }
 
 exports.accountDelete = async (req,res) => {
-    knex('Account')
+    knex('account')
         .where('id', req.body.id)
         .del()
         .then(()=>{
             res.json({message: `Account ${req.body.id} deleted`})
         })
 }
+
+exports.getBio = async (req,res) => {
+    knex('mydb')
+        //.where('id')
+        .select()
+        .from('account')
+        .then((queryRes) => {
+            //res.json({message: `${req.body.name} retreived`})
+            console.log(queryRes)
+        })
+        .catch(err => {
+            //res.json({message: `there was an error: ${err}`})
+            console.log(err)
+        })
+}
+
 
 /*
         universal update, the "loop" function will work in all update create delete functions and tables
