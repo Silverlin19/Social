@@ -1,30 +1,27 @@
 CREATE TABLE IF NOT EXISTS `mydb`.`account` (
-  `name` VARCHAR (0) NOT NULL,
-  `email` VARCHAR (0) NOT NULL,
-  `password` VARCHAR (0) NOT NULL,
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `bio` VARCHAR (0) NULL,
-  `twitter` VARCHAR (45) NULL,
-  `facebook` VARCHAR (45) NULL,
-  `instagram` VARCHAR (45) NULL,
-  `birthday` DATETIME NOT NULL,
-  `pfp` VARCHAR(0) NULL,
-  PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE),
-  UNIQUE INDEX `email_UNIQUE` (`email`) VISIBLE)
+  `userId` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(500) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `bio` varchar(500) NOT NULL,
+  `birthday` datetime NOT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`userId`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
-CREATE TABLE IF NOT EXISTS `mydb`.`post` (
+CREATE TABLE IF NOT EXISTS `mydb`.`friends` (
   `post` VARCHAR(0) NULL,
   `from` VARCHAR(0) NOT NULL,
   `to` VARCHAR(0) NULL
 )
 
-CREATE TABLE IF NOT EXISTS `mydb`.`friends` (
-  `owneracc` VARCHAR(0) NOT NULL,
-  `friendacc` VARCHAR(0) NOT NULL,
-  `blockedacc` BOOLEAN ,
-  `favacc` BOOLEAN ,
-)
-
-
-ENGINE = InnoDB
+CREATE TABLE IF NOT EXISTS `mydb`.`posts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `content` varchar(500) DEFAULT NULL,
+  `userId` int DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
