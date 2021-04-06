@@ -4,9 +4,10 @@ const compression = require('compression')
 const cors = require('cors')
 const helmet = require('helmet')
 require("./db")
+const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
 
-const PORT = 6969
+const PORT = process.env.PORT || 6960
 
 const app = express()
 
@@ -15,21 +16,30 @@ app.use(helmet())
 app.use(compression())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
+app.use(expressLayouts)
+
+app.use(expressLayouts)
+app.set('view engine' , 'ejs')
 
 //Routes
 //homepage routes
-app.get('/', function (req,res) {res.send('hello world')})
-app.post('/', controller.doLogin)
-app.get('/register', controller.showRegister)
-app.post('/register', controller.doRegister)
+app.get('/', (req,res) => {res.render('index')})
+//app.post('/', controller.doLogin)
+app.get('/register' , (req,res) => {
+    res.render('register')
+})
+//app.post('/register', controller.doRegister)
 
-app.post('/user/:userName/update', controller.doUpdateAccount)
+app.get('/user/:userName/update' ,(res,req) => {
+    res.render('update')
+})
+//app.post('/user/:userName/update', controller.doUpdateAccount)
 
 //user routes
 app.get('/user/feed', function (req,res) {res.send('sike bitch')})
-app.get('/user/:userName', controller.doGetUser)
+//app.get('/user/:userName', controller.doGetUser)
 
-app.get('/user/:userName/friends', controller.showFollowed)
+//app.get('/user/:userName/friends', controller.showFollowed)
 
 
 app.listen(PORT, function(){

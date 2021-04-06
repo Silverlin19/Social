@@ -1,5 +1,9 @@
 require('express')
+const bcrypt = require('bcryptjs');
+const passport = require('passport')
 const {Friend, Post, User} = require('./models')
+
+
 
 
 const errHand = (err)=> {
@@ -8,32 +12,82 @@ const errHand = (err)=> {
 
 //User ineractive pages
 async function doLogin(req,res){
-    //make login function
+        if (req.body.userName == accountpointer.userName) 
         res.cookie('userId', `${req.body.userId}`).send('cookie set')
         res.redirect(`/user/${req.body.name}/feed`)
 }
 
-async function showRegister (req,res){
-    
-}
-
 async function doRegister (req,res){
     
-    var createUser = await User.create({ 
-        name: `${req.body.name}`, 
-        email: `${req.body.email}`, 
-        password:`${req.body.password}`, 
-        birthday: `${req.body.birthday}`,
-        bio: `${req.body.bio}`
-    }).catch(errHand)
+    const { name, userNAme , email, password, password2 } = req.body;
+    let errors = [];
+  
+    if (!name || !userName || !email || !password || !password2) {
+      errors.push({ msg: 'Please enter all fields' });
+    }
+  
+    if (password != password2) {
+      errors.push({ msg: 'Passwords do not match' });
+    }
+  
+    if (password.length < 6) {
+      errors.push({ msg: 'Password must be at least 6 characters' });
+    }
+  
+    if (errors.length > 0) {
+      res.render('register', {
+        errors,
+        name,
+        userName,
+        email,
+        password,
+        password2
+      });
+    } else {
+      User.findOne({ email: email }).then(user => {
+        if (user) {
+          errors.push({ msg: 'Email already exists' });
+          res.render('register', {
+            errors,
+            name,
+            userNAme,
+            email,
+            password,
+            password2
+          });
+        } else {
+          const newUser = new User({
+            name,
+            userNAme,
+            email,
+            password
+          });
+  
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  req.flash(
+                    'success_msg',
+                    'You are now registered and can log in'
+                  );
+                  res.redirect('/users/login');
+                })
+                .catch(err => console.log(err));
+            });
+          });
+        }
+      });
+    }
 
-    console.log(`account ${createUser} has been created`)
 
-    res.redirect('/user/:userName/feed')
 }
 
 async function doUpdateAccount (req,res){
-    
+
     var accountPointer = await User.findOne({
         where: {name: `${req.params.userName}`}
     }).catch(errHand)
@@ -86,6 +140,73 @@ async function showFollowed(req,res){
     res.send(userFriends)
 }
 
+async function createUser (req,res){
+    
+    const { name, userNAme , email, password, password2 } = req.body;
+    let errors = [];
+  
+    if (!name || !userName || !email || !password || !password2) {
+      errors.push({ msg: 'Please enter all fields' });
+    }
+  
+    if (password != password2) {
+      errors.push({ msg: 'Passwords do not match' });
+    }
+  
+    if (password.length < 6) {
+      errors.push({ msg: 'Password must be at least 6 characters' });
+    }
+  
+    if (errors.length > 0) {
+      res.render('register', {
+        errors,
+        name,
+        userName,
+        email,
+        password,
+        password2
+      });
+    } else {
+      User.findOne({ email: email }).then(user => {
+        if (user) {
+          errors.push({ msg: 'Email already exists' });
+          res.render('register', {
+            errors,
+            name,
+            userNAme,
+            email,
+            password,
+            password2
+          });
+        } else {
+          const newUser = new User({
+            name,
+            userNAme,
+            email,
+            password
+          });
+  
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newUser.password, salt, (err, hash) => {
+              if (err) throw err;
+              newUser.password = hash;
+              newUser
+                .save()
+                .then(user => {
+                  req.flash(
+                    'success_msg',
+                    'You are now registered and can log in'
+                  );
+                  res.redirect('/users/login');
+                })
+                .catch(err => console.log(err));
+            });
+          });
+        }
+      });
+    }
+
+}
 
 async function doExample (req,res){
     
@@ -93,4 +214,4 @@ async function doExample (req,res){
 
     }    
 
-module.exports = { doGetUser , doLogin , showRegister , doRegister, doUpdateAccount , showFollowed , doFollow }
+module.exports = { doGetUser , doLogin  , doRegister, doUpdateAccount , showFollowed , doFollow }
