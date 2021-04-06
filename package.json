@@ -1,0 +1,32 @@
+{
+  "name": "Social",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.4.1",
+    "knex": "^0.95.4",
+    "knex-migrate-sql-file": "^1.0.3",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "stack": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Silverlin19/Social.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Silverlin19/Social/issues"
+  },
+  "homepage": "https://github.com/Silverlin19/Social#readme"
+}
