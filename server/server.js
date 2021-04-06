@@ -22,22 +22,38 @@ app.use(expressLayouts)
 app.set('view engine' , 'ejs')
 
 //Routes
-//homepage routes
+//home routes
 app.get('/', (req,res) => {res.render('index')})
 //app.post('/', controller.doLogin)
+
+//register
 app.get('/register' , (req,res) => {
     res.render('register')
 })
 //app.post('/register', controller.doRegister)
 
-app.get('/user/:userName/update' ,(res,req) => {
+//login
+app.get('/login' , (req,res) => {
+    res.render('login')
+})
+
+//user
+app.get('/user' , (req,res) => {
+    res.render('user')
+})
+//app.get('/user/:userName', controller.doGetUser)
+//feed of post from user and followed
+app.get('/user/feed', function (req,res) {res.send('sike bitch')})
+app.get('/user/feed', controller.getPost)
+//settings
+app.get('/user/:userName/settings' ,(res,req) => {
     res.render('update')
 })
-//app.post('/user/:userName/update', controller.doUpdateAccount)
+//app.post('/user/:userName/settings', controller.doUpdateAccount)
 
-//user routes
-app.get('/user/feed', function (req,res) {res.send('sike bitch')})
-//app.get('/user/:userName', controller.doGetUser)
+
+
+
 
 //app.get('/user/:userName/friends', controller.showFollowed)
 
