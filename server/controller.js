@@ -1,7 +1,7 @@
 require('express')
-const Post = require('./models/post')
-const User = require("./models/user")
-const Friend = require('./models/friend')
+const {Friend, Post, User} = require('./models')
+
+
 const errHand = (err)=> {
     console.error("Error: ", err)
 }
@@ -37,7 +37,7 @@ async function doUpdateAccount (req,res){
     var accountPointer = await User.findOne({
         where: {name: `${req.params.userName}`}
     }).catch(errHand)
-    
+
     if (req.body.name != null){accountPointer.name = req.body.name}
     if (req.body.password != null){accountPointer.password = req.body.password}
     if (req.body.email != null){accountPointer.email = req.body.email}
@@ -58,7 +58,6 @@ async function doGetUser(req,res){
         var user = await User.findOne({
             where: {name: `${req.params.userName}`}
         }).catch(errHand);
-
         res.json(user)
     }
 
@@ -78,13 +77,12 @@ async function showFollowed(req,res){
         where: {name: `${req.params.userName}`}
     }).catch(errHand)
 
-    Friend.hasMany(User, {as: "User" , foreignKey: 'friendacc' })
-    User.belongsTo(Friend, { as: "Friend" , foreignKey: "userId"})
 
     var userFriends = await Friend.findAll({ 
     where: { owneracc: userid.userId }, 
-    include: [ { model: User , attributes: [] } ] 
+    include: [ { model: User , attributes: [] } ]
     }).catch(errHand)
+
     res.send(userFriends)
 }
 
