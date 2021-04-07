@@ -13,6 +13,11 @@ module.exports = sequelize.define("accounts", {
         allowNull: false,
         unique: false,
     },
+    userName: {
+        type: Sequelize.STRING(500),
+        allowNull: false,
+        unique: true,
+    },
     email: {
         type: Sequelize.STRING(255),
         allowNull: false,

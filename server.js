@@ -16,7 +16,6 @@ app.use(helmet())
 app.use(compression())
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
-app.use(expressLayouts)
 
 app.use(expressLayouts)
 app.set('view engine' , 'ejs')
@@ -36,14 +35,15 @@ app.post('/register', controller.doRegister)
 app.get('/login' , (req,res) => {
     res.render('login')
 })
+app.post('/login', controller.doLogin)
 
 //user
-app.get('/user' , (req,res) => {
+app.get('/user/:userName' , (req,res) => {
     res.render('user')
 })
-//app.get('/user/:userName', controller.doGetUser)
+app.get('/user/:userName', controller.doGetUser)
 //feed of post from user and followed
-app.get('/user/feed', function (req,res) {res.send('sike bitch')})
+app.get('/user/:userName/feed', function (req,res) {res.send('sike bitch')})
 //app.get('/user/feed', controller.getPost)
 //settings
 app.get('/user/:userName/settings' ,(res,req) => {

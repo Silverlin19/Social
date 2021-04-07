@@ -12,14 +12,39 @@ const errHand = (err)=> {
 
 //User ineractive pages
 async function doLogin(req,res){
-        if (req.body.userName == accountpointer.userName) 
-        res.cookie('userId', `${req.body.userId}`).send('cookie set')
-        res.redirect(`/user/${req.body.name}/feed`)
+
+  var accountPointer = await User.findOne({
+    where: {email: `${req.body.email}`}
+  }).catch(errHand)
+
+  console.log(accountPointer)
+
+  if (req.body.email == accountPointer.email || req.body.password == accountPointer.password) {
+    res.cookie('userId', `${accountPointer.userId}`)
+
+    res.redirect(`/user/${accountPointer.userName}/feed`)
+  } else{res.redirect(`/login`)
+  console.log('login failed')
+}
+        
 }
 
 async function doRegister (req,res){
+
+var createUser = await User.create({ 
+  name: `${req.body.name}`, 
+  userName:`${req.body.userName}`,
+  email: `${req.body.email}`, 
+  password:`${req.body.password}`, 
+  birthday: `${req.body.birthday}`,
+  bio: `${req.body.bio}`
+}).catch(errHand)
+
+console.log(`account ${createUser.userName} has been created`)
+
+res.redirect(`/login`)
     
-    const { name, userName , email, password, password2 } = req.body;
+    /*const { name, userName , email, password, password2 } = req.body;
     let errors = [];
   
     if (!name || !userName || !email || !password || !password2) {
@@ -81,7 +106,7 @@ async function doRegister (req,res){
           });
         }
       });
-    }
+    }*/
 
 
 }
