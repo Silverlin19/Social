@@ -17,12 +17,13 @@ async function doLogin(req,res){
     where: {email: `${req.body.email}`}
   }).catch(errHand)
 
-  console.log(accountPointer)
-
   if (req.body.email == accountPointer.email || req.body.password == accountPointer.password) {
     res.cookie('userId', `${accountPointer.userId}`)
+    res.cookie('userbio', `${accountPointer.userbio}`)
+    res.cookie('userName', `${accountPointer.userName}`)
 
     res.redirect(`/user/${accountPointer.userName}/feed`)
+
   } else{res.redirect(`/login`)
   console.log('login failed')
 }
@@ -135,9 +136,12 @@ async function doFollowUser (req,res){
 //API = doFunctionName
 async function doGetUser(req,res){
         var user = await User.findOne({
-            where: {name: `${req.params.userName}`}
+            where: {userName: `${req.params.userName}`}
         }).catch(errHand);
-        res.json(user)
+        var data = { name: `${user.name}`, bio: `${user.bio}`, birthday: `${user.birthday}`}
+        
+        console.log(data)
+        res.render('user',{data:data})
     }
 
 async function doFollow(req,res){

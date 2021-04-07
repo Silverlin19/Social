@@ -43,7 +43,7 @@ app.get('/user/:userName' , (req,res) => {
 })
 app.get('/user/:userName', controller.doGetUser)
 //feed of post from user and followed
-app.get('/user/:userName/feed', function (req,res) {res.send('sike bitch')})
+app.get('/user/:userName/feed', controller.doGetUser)
 //app.get('/user/feed', controller.getPost)
 //settings
 app.get('/user/:userName/settings' ,(res,req) => {
