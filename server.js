@@ -45,9 +45,10 @@ app.get('/user/:userName', controller.doGetUser)
 //feed of post from user and followed
 app.get('/user/:userName/feed', controller.doGetUser)
 //app.get('/user/feed', controller.getPost)
+
 //settings
 app.get('/user/:userName/settings' ,(res,req) => {
-    res.render('update')
+    res.render('bio')
 })
 //app.post('/user/:userName/settings', controller.doUpdateAccount)
 
