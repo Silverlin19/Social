@@ -38,8 +38,18 @@ app.get('/login' , (req,res) => {
 app.post('/login', controller.doLogin)
 
 //user
-app.get('/user/:userName' , (req,res) => {
-    res.render('user')
+// app.get('/user/:userName' , (req,res) => {
+//     res.render('user')
+// })
+// app.get('/user/:userName', controller.doGetUser)
+//feed of post from user and followed
+// app.get('/user/:userName/feed', controller.doGetUser)
+//app.get('/user/feed', controller.getPost)
+
+
+//user bypass
+app.get('/feed' , (req,res) => {
+    res.render('feed')
 })
 app.get('/user/:userName', controller.doGetUser)
 //feed of post from user and followed
