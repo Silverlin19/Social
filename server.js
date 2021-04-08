@@ -22,7 +22,7 @@ app.set('view engine' , 'ejs')
 
 //Routes
 //home routes
-app.get('/', (req,res) => {res.render('index')})
+app.get('/', (req,res) => {res.render('register')})
 //app.post('/', controller.doLogin)
 
 //register
