@@ -20,6 +20,11 @@ app.use(bodyParser.json())
 app.use(expressLayouts)
 app.set('view engine' , 'ejs')
 
+// Static Files
+app.use("/Assets", express.static(__dirname + '/Assets'));
+
+
+
 //Routes
 //home routes
 app.get('/', (req,res) => {res.render('index')})
