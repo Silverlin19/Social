@@ -67,7 +67,9 @@ app.get('/user/:userName/settings' ,(res,req) => {
 })
 //app.post('/user/:userName/settings', controller.doUpdateAccount)
 
-
+app.get('/memes' , (req,res) => {
+    res.render('reddit')
+})
 
 
 

@@ -254,3 +254,26 @@ ul {
 div {
   display: block;
 }
+
+/* Reddit */
+.redBody {
+  width: 100vh;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 10% 90%;
+  overflow: hidden;
+  color: whitesmoke;
+}
+
+#memeBtn {
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 250ms;
+  width: 100px;
+  height: 20px;
+  text-align: center;
+  margin-left: 5%;
+  background: whitesmoke;
+  color: #0a0a0a;
+}
