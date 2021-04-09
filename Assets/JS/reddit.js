@@ -30,7 +30,7 @@ function fetchMemes(){
     let parentDiv = document.createElement('div');
     parentDiv.id = 'memes';
     // fetch('https://www.reddit.com/r/memes.json')
-    fetch('https://www.reddit.com/r/news.json')
+    // fetch('https://www.reddit.com/r/news.json')
     .then(response => response.json())
     .then(body=>{
         for (let index = 0; index < body.data.children.lenth; index++) {
