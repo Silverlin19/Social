@@ -6,4 +6,3 @@ const sequelize = new Sequelize("heroku_67514816a5564ab", "bbec476499053a", "892
 
 module.exports = sequelize;
 global.sequelize = sequelize;
-

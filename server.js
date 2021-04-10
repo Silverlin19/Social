@@ -20,6 +20,11 @@ app.use(bodyParser.json())
 app.use(expressLayouts)
 app.set('view engine' , 'ejs')
 
+// Static Files
+app.use("/Assets", express.static(__dirname + '/Assets'));
+
+
+
 //Routes
 //home routes
 app.get('/', (req,res) => {res.render('register')})
@@ -38,8 +43,18 @@ app.get('/login' , (req,res) => {
 app.post('/login', controller.doLogin)
 
 //user
-app.get('/user/:userName' , (req,res) => {
-    res.render('user')
+// app.get('/user/:userName' , (req,res) => {
+//     res.render('user')
+// })
+// app.get('/user/:userName', controller.doGetUser)
+//feed of post from user and followed
+// app.get('/user/:userName/feed', controller.doGetUser)
+//app.get('/user/feed', controller.getPost)
+
+
+//user bypass
+app.get('/feed' , (req,res) => {
+    res.render('feed')
 })
 app.get('/user/:userName', controller.doGetUser)
 //feed of post from user and followed
@@ -52,7 +67,9 @@ app.get('/user/:userName/settings' ,(res,req) => {
 })
 //app.post('/user/:userName/settings', controller.doUpdateAccount)
 
-
+app.get('/memes' , (req,res) => {
+    res.render('reddit')
+})
 
 
 
