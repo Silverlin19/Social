@@ -38,17 +38,9 @@ app.get('/login' , (req,res) => {
 })
 app.post('/login', controller.doLogin)
 
-<<<<<<< Updated upstream
-//user
-app.get('/user/:userName' , (req,res) => {
-    res.render('user')
-})
-app.get('/user/:userName', controller.doGetUser)
-=======
 //user bypass
 app.get('/user/:userName', controller.userPage)
 app.post('/user/:userName', controller.doPost)
->>>>>>> Stashed changes
 //feed of post from user and followed
 app.get('/user/:userName/feed', controller.userPage)
 //app.get('/user/feed', controller.getPost)

@@ -2,7 +2,7 @@ require('express')
 const bcrypt = require('bcryptjs');
 const passport = require('passport')
 const {Friend, Post, User} = require('./models')
-const accounts = require('./accounts')
+const accounts = require('./accounts.js')
 
 
 
@@ -21,6 +21,7 @@ async function userPage(req,res) {
 async function doLogin(req,res){
 
   myUser = await accounts.getUserByEmail(req.body.email)
+  console.log(myUser)
   
   if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userId', `${myUser.userId}`)
@@ -37,14 +38,15 @@ async function doLogin(req,res){
 
 async function doUpdateAccount (req,res){
 
+  myUser = await accounts.getUser(req.params.userName)
 
-    if (req.body.name != null){user.doGetUser.name = req.body.name}
-    if (req.body.password != null){user.doGetUser.password = req.body.password}
-    if (req.body.email != null){user.doGetUser.email = req.body.email}
-    if (req.body.bio != null){user.doGetUser.bio = req.body.bio}
-    if (req.body.userName != null){user.doGetUser.userName = req.body.userName}
+    if (req.body.name != null){myUser.name = req.body.name}
+    if (req.body.password != null){myUser.password = req.body.password}
+    if (req.body.email != null){myUser.email = req.body.email}
+    if (req.body.bio != null){myUser.bio = req.body.bio}
+    if (req.body.userName != null){myUser.userName = req.body.userName}
 
-    user.doGetUser = await user.doGetUser.save()
+    myUser = await myUser.save()
 
     res.send('slurped')
 }
