@@ -6,8 +6,9 @@ const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
+const user = require('./accounts')
 
-const PORT = process.env.PORT || 6960
+const PORT = process.env.PORT || 6969
 
 const app = express()
 
@@ -29,7 +30,7 @@ app.get('/', (req,res) => {res.render('register')})
 app.get('/register' , (req,res) => {
     res.render('register')
 })
-app.post('/register', controller.doRegister)
+app.post('/register', controller.createUser)
 
 //login
 app.get('/login' , (req,res) => {
@@ -37,20 +38,25 @@ app.get('/login' , (req,res) => {
 })
 app.post('/login', controller.doLogin)
 
+<<<<<<< Updated upstream
 //user
 app.get('/user/:userName' , (req,res) => {
     res.render('user')
 })
 app.get('/user/:userName', controller.doGetUser)
+=======
+//user bypass
+app.get('/user/:userName', controller.userPage)
+app.post('/user/:userName', controller.doPost)
+>>>>>>> Stashed changes
 //feed of post from user and followed
-app.get('/user/:userName/feed', controller.doGetUser)
+app.get('/user/:userName/feed', controller.userPage)
 //app.get('/user/feed', controller.getPost)
 
 //settings
-app.get('/user/:userName/settings' ,(res,req) => {
-    res.render('bio')
-})
-//app.post('/user/:userName/settings', controller.doUpdateAccount)
+app.get('/user/:userName/settings' ,controller.doGetBio)
+
+app.post('/user/:userName/settings', controller.doUpdateAccount)
 
 
 

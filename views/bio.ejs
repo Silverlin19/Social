@@ -1,1 +1,16 @@
-allows us to update bio have future sttings in mind 
+<div class="form-group">
+    <form action="/user/<%-data.userName%>/settings" method="POST">
+        <div class="form-group">
+            <label for="bio">bio</label>
+            <input
+              type="bio"
+              id="bio"
+              name="bio"
+              class="form-control"
+              placeholder="Enter bio"
+              value="<%= typeof bio != 'undefined' ? bio : '' %>"
+            />
+            <button type="submit" class="btn btn-primary btn-block">Update</button>
+        </div>
+    </form>
+</div>
