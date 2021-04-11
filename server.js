@@ -6,8 +6,9 @@ const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
+const user = require('./accounts')
 
-const PORT = process.env.PORT || 6960
+const PORT = process.env.PORT || 6969
 
 const app = express()
 
@@ -27,15 +28,14 @@ app.use("/Assets", express.static(__dirname + '/Assets'));
 
 //Routes
 //home routes
-app.get('/', (req,res) => {res.render('index')})
+app.get('/', (req,res) => {res.render('register')})
 //app.post('/', controller.doLogin)
 
 //register
 app.get('/register' , (req,res) => {
     res.render('register')
 })
-app.post('/register', controller.doRegister)
-
+app.post('/register', controller.createUser)
 //login
 app.get('/login' , (req,res) => {
     res.render('login')
@@ -53,21 +53,23 @@ app.get('/bio', controller.doBio)
 // app.get('/user/:userName/feed', controller.doGetUser)
 //app.get('/user/feed', controller.getPost)
 
+//Spotify API music section
+app.get('/Music' , (req,res) => {
+    res.render('spot')
+})
+app.post('/login', controller.doLogin)
 
 //user bypass
-app.get('/feed' , (req,res) => {
-    res.render('feed')
-})
-app.get('/user/:userName', controller.doGetUser)
+app.get('/user/:userName', controller.userPage)
+app.post('/user/:userName', controller.doPost)
 //feed of post from user and followed
-app.get('/user/:userName/feed', controller.doGetUser)
+app.get('/user/:userName/feed', controller.userPage)
 //app.get('/user/feed', controller.getPost)
 
 //settings
-app.get('/user/:userName/settings' ,(res,req) => {
-    res.render('bio')
-})
-//app.post('/user/:userName/settings', controller.doUpdateAccount)
+app.get('/user/:userName/settings' ,controller.doGetBio)
+
+app.post('/user/:userName/settings', controller.doUpdateAccount)
 
 app.get('/memes' , (req,res) => {
     res.render('reddit')
