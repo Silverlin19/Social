@@ -42,6 +42,11 @@ app.get('/login' , (req,res) => {
     res.render('login')
 })
 app.post('/login', controller.doLogin)
+//spot
+app.get('/music' , (req,res) => {
+    res.render('spot')
+})
+app.post('/login', controller.doLogin)
 
 //user bypass
 app.get('/user/:userName', controller.userPage)
