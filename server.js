@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const cors = require('cors')
+const session = require ('express-session')
 const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
@@ -12,6 +13,11 @@ const PORT = process.env.PORT || 6969
 
 const app = express()
 
+/*app.use(session({
+    secret: '',
+    resave: false,
+    saveUninitialized: false,
+}))*/
 app.use(cors())
 app.use(helmet())
 app.use(compression())
@@ -23,8 +29,6 @@ app.set('view engine' , 'ejs')
 
 // Static Files
 app.use("/Assets", express.static(__dirname + '/Assets'));
-
-
 
 //Routes
 //home routes
@@ -63,15 +67,11 @@ app.get('/memes' , (req,res) => {
     res.render('reddit')
 })
 
-
-
 //app.get('/user/:userName/friends', controller.showFollowed)
-
 
 app.listen(PORT, function(){
     console.log(`server is running on port: ${PORT}`)
 })
-
 
 //Curl --data-urlencode “name=Kyle_Miller&password=Miller321&email=Kyle@tiptops.com&birthday=1997-02-13” -x POST localhost:6969/register/
 //Curl --data-urlencode “name=Kyle_Miller&password=Miller321&email=Kyle@tiptops.com&birthday=1997-02-13” localhost:6969/register/

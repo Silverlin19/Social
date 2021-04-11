@@ -47,8 +47,7 @@ async function doUpdateAccount (req,res){
     if (req.body.userName != null){myUser.userName = req.body.userName}
 
     myUser = await myUser.save()
-
-    res.send('slurped')
+    res.redirect(`/user/${myUser.userName}/feed`)
 }
 
 async function doPost (req,res){
