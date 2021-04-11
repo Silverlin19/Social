@@ -170,7 +170,7 @@ async function createUser (req,res){
               newUser
                 .save()
                 .then(user => {
-                  res.redirect('/users/login');
+                  res.redirect('/login');
                 })
                 .catch(err => console.log(err));
             });

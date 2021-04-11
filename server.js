@@ -36,10 +36,14 @@ app.get('/register' , (req,res) => {
     res.render('register')
 })
 app.post('/register', controller.createUser)
-
 //login
 app.get('/login' , (req,res) => {
     res.render('login')
+})
+app.post('/login', controller.doLogin)
+//Spotify API music section
+app.get('/Music' , (req,res) => {
+    res.render('spot')
 })
 app.post('/login', controller.doLogin)
 
