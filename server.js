@@ -45,6 +45,18 @@ app.get('/login' , (req,res) => {
     res.render('login')
 })
 app.post('/login', controller.doLogin)
+
+app.get('/bio', controller.doBio)
+
+//user
+// app.get('/user/:userName' , (req,res) => {
+//     res.render('user')
+// })
+// app.get('/user/:userName', controller.doGetUser)
+//feed of post from user and followed
+// app.get('/user/:userName/feed', controller.doGetUser)
+//app.get('/user/feed', controller.getPost)
+
 //Spotify API music section
 app.get('/Music' , (req,res) => {
     res.render('spot')

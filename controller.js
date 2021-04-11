@@ -15,7 +15,7 @@ const errHand = (err)=> {
 async function userPage(req,res) {
   myUser = await accounts.getUser(req.params.userName)
   myPosts = await accounts.getPostsByUserId(myUser.userId)
-  
+
   res.render('user',{data:myUser , posts:myPosts})
 }
 
@@ -32,10 +32,16 @@ async function doLogin(req,res){
 
     res.redirect(`/user/${myUser.userName}/feed`)
 
-  } else{res.redirect(`/login`)
+  } else {res.redirect(`/login`)
   console.log('login failed')
+  }
 }
 
+async function doBio(req, res, next) {
+  res.render('bio')
+}
+
+async function doRegister (req,res){
 }
 
 async function doUpdateAccount (req,res){
