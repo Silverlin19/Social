@@ -32,6 +32,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+
 .header {
   height: 70vh;
   display: flex;
@@ -39,6 +40,7 @@ html {
   justify-content: center;
   background-color: black;
 }
+
 
 .video-background {
   object-fit: cover;
