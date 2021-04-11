@@ -30,6 +30,10 @@ async function doLogin(req,res){
         
 }
 
+async function doBio(req, res, next) {
+  res.render('bio')
+}
+
 async function doRegister (req,res){
 
 var createUser = await User.create({ 
@@ -243,4 +247,4 @@ async function doExample (req,res){
 
     }    
 
-module.exports = { doGetUser , doLogin  , doRegister, doUpdateAccount , showFollowed , doFollow }
+module.exports = { doGetUser , doLogin  , doRegister, doUpdateAccount , showFollowed , doFollow, doBio }
