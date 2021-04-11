@@ -29,7 +29,7 @@ module.exports = sequelize.define("accounts", {
     },
     bio: {
         type: Sequelize.STRING(500),
-        allowNull: false,
+        allowNull: true,
     },
     birthday: {
         type: Sequelize.DATE,
