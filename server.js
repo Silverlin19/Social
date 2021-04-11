@@ -26,10 +26,10 @@ app.use(cors({
     methods: ["GET" , "POST"],
     credentials: true
 }))
-app.use(cookieParser())
 app.use(helmet())
 app.use(compression())
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(cookieParser())
 app.use(bodyParser.json())
 
 app.use(expressLayouts)
@@ -68,8 +68,8 @@ app.get('/user/:userName', controller.userPage)
 app.post('/user/:userName', controller.doPost)
 //feed of post from user and followed
 app.get('/user/:userName/feed', controller.userPage)
+app.post('/search' , controller.searchUser)
 
-//other
 
 //settings
 app.get('/user/:userName/settings' ,controller.doGetBio)

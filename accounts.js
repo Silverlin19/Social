@@ -11,6 +11,13 @@ async function getUser (userName){
     
 }
 
+async function getUserByName (name){
+    return await User.findOne({
+        where: {name: `${name}`}
+    }).catch(errHand);
+    
+}
+
 async function getUserByEmail (email){
     return await User.findOne({
         where: {email: `${email}`}
@@ -25,4 +32,4 @@ async function getPostsByUserId (userId){
  
 }
 
-module.exports = { getUser, getUserByEmail , getPostsByUserId }
+module.exports = { getUser, getUserByEmail , getPostsByUserId , getUserByName }

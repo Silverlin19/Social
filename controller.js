@@ -26,7 +26,6 @@ async function doLogin(req,res){
   
   if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userId', `${myUser.userId}`)
-    res.cookie('userbio', `${myUser.userbio}`)
     res.cookie('userName', `${myUser.userName}`)
 
     req.session.user = myUser
@@ -41,11 +40,10 @@ async function doLogin(req,res){
   }
 }
 
-async function doBio(req, res, next) {
-  res.render('bio')
-}
+async function searchUser(req, res) {
+  user = await accounts.getUserByName(req.body.name)
 
-async function doRegister (req,res){
+  res.redirect(`/user/${user.userName}/feed`)
 }
 
 async function doUpdateAccount (req,res){
@@ -75,8 +73,6 @@ async function doPost (req,res){
   res.redirect(`/user/${myUser.userName}/feed`)
 
 }
-
-
 
 async function doFollowUser (req,res){
 
@@ -201,4 +197,4 @@ async function doExample (req,res){
 
     }    
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage }
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser}
