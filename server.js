@@ -46,7 +46,7 @@ app.get('/login' , (req,res) => {
 })
 app.post('/login', controller.doLogin)
 
-app.get('/bio', controller.doBio)
+//app.get('/bio', controller.doBio)
 
 //user
 // app.get('/user/:userName' , (req,res) => {
