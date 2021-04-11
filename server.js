@@ -31,7 +31,6 @@ app.get('/register' , (req,res) => {
     res.render('register')
 })
 app.post('/register', controller.createUser)
-
 //login
 app.get('/login' , (req,res) => {
     res.render('login')
