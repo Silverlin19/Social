@@ -53,13 +53,12 @@ async function doUpdateAccount (req,res){
 
 async function doPost (req,res){
 
-  /*var user = await User.findOne({
-    where: {userName: `${req.params.userName}`}
-  }).catch(errHand)
-*/
+  myUser = await accounts.getUser(req.params.userName)
+  console.log(myUser)
+
   const createPost = await Post.create({ 
     content: `${req.body.content}`, 
-    userId: `${user.doGetUser.userId}`,
+    userId: `${myUser.userId}`,
 }).catch(errHand)
 
 }
@@ -170,7 +169,7 @@ async function createUser (req,res){
               newUser
                 .save()
                 .then(user => {
-                  res.redirect('/users/login');
+                  res.redirect('/login');
                 })
                 .catch(err => console.log(err));
             });
