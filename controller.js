@@ -15,7 +15,7 @@ const errHand = (err)=> {
 async function userPage(req,res) {
   myUser = await accounts.getUser(req.params.userName)
   myPosts = await accounts.getPostsByUserId(myUser.userId)
-
+ 
   res.render('user',{data:myUser , posts:myPosts})
 }
 
@@ -23,12 +23,16 @@ async function userPage(req,res) {
 async function doLogin(req,res){
 
   myUser = await accounts.getUserByEmail(req.body.email)
-  console.log(myUser)
   
   if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userId', `${myUser.userId}`)
     res.cookie('userbio', `${myUser.userbio}`)
     res.cookie('userName', `${myUser.userName}`)
+
+    req.session.user = myUser
+
+    console.log("delta")
+    console.log(req.session.user)
 
     res.redirect(`/user/${myUser.userName}/feed`)
 

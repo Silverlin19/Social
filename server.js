@@ -7,21 +7,29 @@ const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
-const user = require('./accounts')
-
+const cookieParser = require('cookie-parser')
 const PORT = process.env.PORT || 6969
 
 const app = express()
 
-/*app.use(session({
-    secret: '',
+app.use(session({
+    key: 'userId',
+    secret: 'delta',
     resave: false,
     saveUninitialized: false,
-}))*/
-app.use(cors())
+    cookie: {    
+    expires: 60*60*24*7
+    }
+}))
+app.use(cors({
+    origin: ["http://localhost:6969"],
+    methods: ["GET" , "POST"],
+    credentials: true
+}))
+app.use(cookieParser())
 app.use(helmet())
 app.use(compression())
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
 
 app.use(expressLayouts)
@@ -48,14 +56,6 @@ app.post('/login', controller.doLogin)
 
 //app.get('/bio', controller.doBio)
 
-//user
-// app.get('/user/:userName' , (req,res) => {
-//     res.render('user')
-// })
-// app.get('/user/:userName', controller.doGetUser)
-//feed of post from user and followed
-// app.get('/user/:userName/feed', controller.doGetUser)
-//app.get('/user/feed', controller.getPost)
 
 //Spotify API music section
 app.get('/Music' , (req,res) => {
@@ -68,7 +68,8 @@ app.get('/user/:userName', controller.userPage)
 app.post('/user/:userName', controller.doPost)
 //feed of post from user and followed
 app.get('/user/:userName/feed', controller.userPage)
-//app.get('/user/feed', controller.getPost)
+
+//other
 
 //settings
 app.get('/user/:userName/settings' ,controller.doGetBio)
