@@ -1,14 +1,18 @@
 var header = document.getElementById("myHeader");
+var footer = document.getElementById("myHeader");
 
 
-
+console.log(header.innerHTML)
+console.log(footer.innerHTML)
 disHeader = function(params) {
-if (window.location.href === ) {
-    console.log(window.location.href);
-
+if (window.location.href === "http://localhost:6969/register" || "http://localhost:6969/login" ) {
+header.style.visibility = 'hidden';
+footer.style.visibility = 'hidden';
     
 } else {
-    console.log("Not getting rid of me that easy");  
+    header.style.visibility = 'visible';
+    footer.style.visibility = 'visible';
+
 
 }
     
@@ -16,4 +20,4 @@ if (window.location.href === ) {
 
 
 
-disHeader();
+// disHeader();
