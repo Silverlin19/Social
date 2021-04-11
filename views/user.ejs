@@ -23,3 +23,13 @@
       </div>
   </form>
 </div>
+<% for( let post of posts || [] ){ %>
+  <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header"><%-data.name%></div>
+    <div class="card-body">
+      <p class="card-text"><%=post.content%></p>
+    </div>
+  </div>
+<%} %>
+
+

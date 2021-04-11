@@ -2,7 +2,8 @@ require('express')
 const bcrypt = require('bcryptjs');
 const passport = require('passport')
 const {Friend, Post, User} = require('./models')
-const accounts = require('./accounts.js')
+const accounts = require('./accounts.js');
+const post = require('./models/post');
 
 
 
@@ -13,8 +14,9 @@ const errHand = (err)=> {
 
 async function userPage(req,res) {
   myUser = await accounts.getUser(req.params.userName)
+  myPosts = await accounts.getPostsByUserId(myUser.userId)
   
-  res.render('user',{data:myUser})
+  res.render('user',{data:myUser , posts:myPosts})
 }
 
 //User ineractive pages
@@ -59,8 +61,12 @@ async function doPost (req,res){
     content: `${req.body.content}`, 
     userId: `${myUser.userId}`,
 }).catch(errHand)
+  
+  res.redirect(`/user/${myUser.userName}/feed`)
 
 }
+
+
 
 async function doFollowUser (req,res){
 
@@ -185,4 +191,4 @@ async function doExample (req,res){
 
     }    
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio,userPage}
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage }

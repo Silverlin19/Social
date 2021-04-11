@@ -18,4 +18,11 @@ async function getUserByEmail (email){
 
 }
 
-module.exports = {getUser, getUserByEmail}
+async function getPostsByUserId (userId){
+    return await Post.findAll({
+        where: {userId: `${userId}`}
+    }).catch(errHand);
+ 
+}
+
+module.exports = { getUser, getUserByEmail , getPostsByUserId }
