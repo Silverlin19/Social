@@ -1,0 +1,26 @@
+<div class="row mt-5">
+    <div class="col-md-6 m-auto">
+      <div class="card card-body">
+        <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
+        <form action="/delete/:userName" method="POST">
+          <div class="form-group">
+            <label for="userName">User Name</label>
+            <input
+              type="userName"
+              id="userName"
+              name="userName"
+              class="form-control"
+              placeholder="Enter User Name to delete"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Delete</button>
+        </form>
+        <p class="lead mt-4">
+          Changed Your Mind <a href="/user/<%-data.user%>/feed">Return</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="../Assets/JS/dissapear.js"></script>

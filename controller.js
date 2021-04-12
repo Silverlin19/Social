@@ -22,7 +22,16 @@ async function userPage(req,res) {
  
   res.render('user',{data:myUser , posts:myPosts, nav:nav[2], data2:otherUser, posts2:otherPost})
 }
-
+async function deleteUserPage(req,res) {
+  myUser = await req.session.user
+  console.log(myUser)
+  myPosts = await accounts.getPostsByUserId(myUser.userId)
+  otherUser = await accounts.getUser(req.params.userName)
+  otherPost = await accounts.getPostsByUserId(otherUser.userId)
+  var nav = req.url.split('/')
+ 
+  res.render('accDelete',{data:myUser , posts:myPosts, nav:nav[2], data2:otherUser, posts2:otherPost})
+}
 //User ineractive pages
 async function doLogin(req,res){
 
@@ -35,7 +44,7 @@ async function doLogin(req,res){
       req.body.password = hash})
     });
   
-  if (req.body.email == myUser.email || req.body.password == myUser.password) {
+  if (req.body.email == myUser.email && req.body.password == myUser.password) {
     res.cookie('userName', `${myUser.userName}`)
 
     req.session.user = myUser
@@ -49,18 +58,6 @@ async function doLogin(req,res){
   console.log('login failed')
   }
 }
-
-async function doRegister( req , res ) {
-
-  const createUser = await User.create({ 
-    name: `${req.body.name}`, 
-    email: `${req.body.email}`, 
-    password:`${req.body.password}`, 
-    birthday: `${req.body.birthday}`,
-    bio: `${req.body.birthday}`
-  })
-
- }
 
 async function searchUser(req, res) {
   user = await accounts.getUserByName(req.body.name)
@@ -227,9 +224,11 @@ async function createUser (req,res){
 
 async function deleteUser(req,res) {
   myUser = await req.session.user
+  if (req.body.userName == myUser.userName){
   await User.destroy({
     where: { userId: `${myUser.userId}`}
-  })
+  })}
+  res.redirect('/login')
 }
 
 
@@ -240,4 +239,4 @@ async function doExample (req,res){
     }
 
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser,deleteUser}
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser , deleteUser , deleteUserPage }

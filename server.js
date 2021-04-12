@@ -111,12 +111,14 @@ app.post('/search' , controller.searchUser)
 
 //settings
 app.get('/user/:userName/settings' ,controller.doGetBio)
-
 app.post('/user/:userName/settings', controller.doUpdateAccount)
 
 app.get('/memes' , (req,res) => {
     res.render('reddit')
 })
+
+app.get('/delete/:userName', controller.deleteUserPage)
+app.post('/delete/:userName', controller.deleteUser)
 
 //app.get('/user/:userName/friends', controller.showFollowed)
 
