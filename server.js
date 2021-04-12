@@ -5,25 +5,19 @@ const cors = require('cors')
 //cookiesValidation
 const expressSession = require('express-session');
 const SessionStore = require('express-session-sequelize')(expressSession.Store);
-
 // cookies end
 
 const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const sequelize = require('./db');
 const PORT = process.env.PORT || 6969
 
-// cookies 
-const Sequelize = require('sequelize');
-const myDatabase = new Sequelize('database', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'mysql',
-});
  
 const sequelizeSessionStore = new SessionStore({
-    db: myDatabase,
+    db: sequelize,
 });
 
 // cookies end
