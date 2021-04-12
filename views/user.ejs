@@ -1,14 +1,14 @@
 <div class="jumbotron">
-    <h1 class="display-3"><%- data.name %></h1>
-    <p class="lead"><%- data.bio %></p>
+    <h1 class="display-3"><%if (nav == data.userName) {%><%- data.name%><%} else {%><%- data2.name%><%}%></h1>
+    <p class="lead"><%if (nav == data.userName) {%><%- data.bio%><%} else {%><%- data2.bio%><%}%></p>
     <hr class="my-4">
     <p class="lead">
-    
+    <%if (nav == data.userName) {%>
     <a class="btn btn-primary btn-lg" href="/user/<%- data.userName %>/settings" role="button">Settings</a>
-    
+    <%}%>
   </p>
 </div>
-
+<%if (nav == data.userName) {%>
 <div class="form-group">
   <form action="/user/<%- data.userName %>" method="POST">
       <div class="form-group">
@@ -25,12 +25,25 @@
       </div>
   </form>
 </div>
-
+<%}%>
+<%if (nav == data.userName) {%>
 <% for( let post of posts || [] ){ %>
   <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
-    <div class="card-header"><%-data.name%></div>
+    <div class="card-header"><%- data.name%></div>
     <div class="card-body">
       <p class="card-text"><%=post.content%></p>
     </div>
   </div>
-<%} %>
+  <%}%>
+<%}%>
+
+<%if (nav !== data.userName) {%>
+  <% for( let post of posts2 || [] ){ %>
+    <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header"><%- data2.name%></div>
+      <div class="card-body">
+        <p class="card-text"><%=post.content%></p>
+      </div>
+    </div>
+    <%}%>
+  <%}%>

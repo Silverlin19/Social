@@ -13,10 +13,14 @@ const errHand = (err)=> {
 }
 
 async function userPage(req,res) {
-  myUser = await accounts.getUser(req.params.userName)
+  myUser = await req.session.user
+  console.log(myUser)
   myPosts = await accounts.getPostsByUserId(myUser.userId)
+  otherUser = await accounts.getUser(req.params.userName)
+  otherPost = await accounts.getPostsByUserId(otherUser.userId)
+  var nav = req.url.split('/')
  
-  res.render('user',{data:myUser , posts:myPosts})
+  res.render('user',{data:myUser , posts:myPosts, nav:nav[2], data2:otherUser, posts2:otherPost})
 }
 
 //User ineractive pages
@@ -31,8 +35,7 @@ async function doLogin(req,res){
       req.body.password = hash})
     });
   
-  if (req.body.email == myUser.email || hash == myUser.password) {
-    res.cookie('userId', `${myUser.userId}`)
+  if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userName', `${myUser.userName}`)
 
     req.session.user = myUser
