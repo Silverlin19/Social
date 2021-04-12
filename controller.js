@@ -13,10 +13,13 @@ const errHand = (err)=> {
 }
 
 async function userPage(req,res) {
-  myUser = await accounts.getUser(req.params.userName)
+  myUser = req.session.user
+  otherUser = await accounts.getUser(req.params.userName)
   myPosts = await accounts.getPostsByUserId(myUser.userId)
+  
+  
  
-  res.render('user',{data:myUser , posts:myPosts})
+  res.render('user',{data:myUser , posts:myPosts, user:otherUser})
 }
 
 //User ineractive pages
@@ -25,15 +28,11 @@ async function doLogin(req,res){
   myUser = await accounts.getUserByEmail(req.body.email)
   
   if (req.body.email == myUser.email || req.body.password == myUser.password) {
-    res.cookie('userId', `${myUser.userId}`)
     res.cookie('userbio', `${myUser.userbio}`)
     res.cookie('userName', `${myUser.userName}`)
 
-    req.session.user = myUser
-
     console.log("delta")
     console.log(req.session.user)
-
     res.redirect(`/user/${myUser.userName}/feed`)
 
   } else {res.redirect(`/login`)
@@ -41,16 +40,9 @@ async function doLogin(req,res){
   }
 }
 
-async function doBio(req, res, next) {
-  res.render('bio')
-}
-
-async function doRegister (req,res){
-}
-
 async function doUpdateAccount (req,res){
 
-  myUser = await accounts.getUser(req.params.userName)
+  myUser = req.session.user
 
     if (req.body.name != null){myUser.name = req.body.name}
     if (req.body.password != null){myUser.password = req.body.password}
@@ -64,7 +56,7 @@ async function doUpdateAccount (req,res){
 
 async function doPost (req,res){
 
-  myUser = await accounts.getUser(req.params.userName)
+  myUser = req.session.user
   console.log(myUser)
 
   const createPost = await Post.create({ 
@@ -78,8 +70,8 @@ async function doPost (req,res){
 
 
 
-async function doFollowUser (req,res){
-
+async function searchUser (req,res){
+  var user = await User.findOne()
 }
 
 //API = doFunctionName
