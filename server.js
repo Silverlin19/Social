@@ -85,12 +85,25 @@ app.post('/register', controller.createUser)
 app.get('/login' , (req,res) => {
     res.render('login')
 })
+
+app.get('/social' , (req,res) => {
+    res.render('feed')
+})
+
 app.post('/login', controller.doLogin)
 //spot
 app.get('/music' , (req,res) => {
     res.render('spot')
 })
 app.post('/login', controller.doLogin)
+
+app.get('/friends' , (req,res) => {
+    res.render('friends')
+})
+
+app.get('/server' , (req,res) => {
+    res.render('server')
+})
 
 //app.get('/bio', controller.doBio)
 
@@ -116,6 +129,16 @@ app.post('/user/:userName/settings', controller.doUpdateAccount)
 
 app.get('/memes' , (req,res) => {
     res.render('reddit')
+})
+
+app.get('/:pageId' , (req,res) => {
+    try {
+        console.log('PAGEID = ' + pageId)
+        res.render(pageId)
+    } catch (err) {
+        res.render('notfound');
+    }
+    
 })
 
 //app.get('/user/:userName/friends', controller.showFollowed)
