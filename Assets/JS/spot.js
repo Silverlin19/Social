@@ -1,3 +1,6 @@
+/*jshint esversion: 6 */
+
+
 // Document has been loaded
 $( document ).ready(function() {
 

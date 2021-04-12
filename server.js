@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression')
@@ -14,6 +15,8 @@ const controller = require('./controller')
 const cookieParser = require('cookie-parser');
 const sequelize = require('./db');
 const PORT = process.env.PORT || 6969
+
+
 
  
 const sequelizeSessionStore = new SessionStore({
@@ -35,6 +38,13 @@ const app = express()
 //     expires: 60*60*24*7
 //     }
 // }))
+app.use(function (req, res, next) {
+  res.setHeader(
+    'Content-Security-Policy-Report-Only',
+    "default-src 'self'; font-src 'self' https://use.fontawesome.com/releases/v5.6.3/css/all.css; img-src 'self' https://images.unsplash.com; script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js; style-src 'self' https://fonts.googleapis.com https://bootswatch.com/4/slate/bootstrap.min.css; frame-src 'self' https://www.youtube.com https://youtube.com;"
+  );
+  next();
+});
 app.use(cors({
     origin: ["http://localhost:6969"],
     methods: ["GET" , "POST"],
@@ -88,7 +98,7 @@ app.post('/login', controller.doLogin)
 //Spotify API music section
 app.get('/user/:userName/Music' , (req,res) => {
     res.render('spot')
-})
+});
 app.post('/login', controller.doLogin)
 
 //user bypass
