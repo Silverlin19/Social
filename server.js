@@ -64,12 +64,13 @@ app.get('/Music' , (req,res) => {
 app.post('/login', controller.doLogin)
 
 //user bypass
-app.get('/user/:userName', controller.userPage)
+app.get('/user', controller.userPage)
 app.post('/user/:userName', controller.doPost)
 //feed of post from user and followed
 app.get('/user/:userName/feed', controller.userPage)
 app.post('/search' , controller.searchUser)
 
+app.get('/follow/:userName', controller.doFollow )
 
 //settings
 app.get('/user/:userName/settings' ,controller.doGetBio)

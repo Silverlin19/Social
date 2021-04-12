@@ -22,9 +22,16 @@ async function userPage(req,res) {
 //User ineractive pages
 async function doLogin(req,res){
 
+
   myUser = await accounts.getUserByEmail(req.body.email)
+
+  bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(req.body.password, salt, (err, hash) => {
+      if (err) throw err;
+      req.body.password = hash})
+    });
   
-  if (req.body.email == myUser.email || req.body.password == myUser.password) {
+  if (req.body.email == myUser.email || hash == myUser.password) {
     res.cookie('userId', `${myUser.userId}`)
     res.cookie('userName', `${myUser.userName}`)
 
@@ -39,6 +46,18 @@ async function doLogin(req,res){
   console.log('login failed')
   }
 }
+
+async function doRegister( req , res ) {
+
+  const createUser = await User.create({ 
+    name: `${req.body.name}`, 
+    email: `${req.body.email}`, 
+    password:`${req.body.password}`, 
+    birthday: `${req.body.birthday}`,
+    bio: `${req.body.birthday}`
+  })
+
+ }
 
 async function searchUser(req, res) {
   user = await accounts.getUserByName(req.body.name)
@@ -172,19 +191,23 @@ async function createUser (req,res){
             birthday,
             password
           });
-  
+          
           bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err;
-              newUser.password = hash;
-              newUser
-                .save()
-                .then(user => {
-                  res.redirect('/login');
-                })
-                .catch(err => console.log(err));
-            });
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                req.flash(
+                  'success_msg',
+                  'You are now registered and can log in'
+                );
+                res.redirect('/login');
+              })
+              .catch(err => console.log(err));
           });
+        });
         }
       });
     }
@@ -196,6 +219,6 @@ async function doExample (req,res){
         //function goes here
 
     }
-    
+
 
 module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser}
