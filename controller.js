@@ -195,6 +195,7 @@ async function doExample (req,res){
     
         //function goes here
 
-    }    
+    }
+    
 
 module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser}
