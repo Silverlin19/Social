@@ -9,7 +9,7 @@
     
   </p>
 </div>
-<%if ( :userName == data.userName ){ %> 
+
 <div class="form-group">
   <form action="/user/<%- data.userName %>" method="POST">
       <div class="form-group">
@@ -26,7 +26,7 @@
       </div>
   </form>
 </div>
-<% } %>
+
 
 <% for( let post of posts || [] ){ %>
   <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">

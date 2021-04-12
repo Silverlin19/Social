@@ -17,8 +17,6 @@ async function userPage(req,res) {
   otherUser = await accounts.getUser(req.params.userName)
   myPosts = await accounts.getPostsByUserId(myUser.userId)
   
-  
- 
   res.render('user',{data:myUser , posts:myPosts, user:otherUser})
 }
 
@@ -68,10 +66,10 @@ async function doPost (req,res){
 
 }
 
-
-
 async function searchUser (req,res){
-  var user = await User.findOne()
+  var search = await accounts.getUser(req.body.name)
+  console.log(search)
+  res.redirect(`/user/${search.userName}/feed`)
 }
 
 //API = doFunctionName
@@ -89,6 +87,7 @@ async function searchUser (req,res){
       var user = await User.findOne({
           where: {userName: `${req.params.userName}`}
       }).catch(errHand);
+      console.log(user)
       var data = { name: `${user.name}`, bio: `${user.bio}`, birthday: `${user.birthday}`, userName: `${user.userName}`}
       
       console.log(data)
@@ -176,7 +175,7 @@ async function createUser (req,res){
               newUser
                 .save()
                 .then(user => {
-                  res.redirect('/login');
+                  res.redirect(`/user/${newUser.userName}/settings`);
                 })
                 .catch(err => console.log(err));
             });
@@ -193,4 +192,4 @@ async function doExample (req,res){
 
     }    
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage }
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser }

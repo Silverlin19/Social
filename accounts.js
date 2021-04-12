@@ -11,6 +11,13 @@ async function getUser (userName){
     
 }
 
+async function getUser (name){
+    return await User.findOne({
+        where: {name: `${name}`}
+    }).catch(errHand);
+    
+}
+
 async function getUserByEmail (email){
     return await User.findOne({
         where: {email: `${email}`}
