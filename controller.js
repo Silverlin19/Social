@@ -2,7 +2,8 @@ require('express')
 const bcrypt = require('bcryptjs');
 const passport = require('passport')
 const {Friend, Post, User} = require('./models')
-const accounts = require('./accounts.js')
+const accounts = require('./accounts.js');
+const post = require('./models/post');
 
 
 
@@ -13,27 +14,36 @@ const errHand = (err)=> {
 
 async function userPage(req,res) {
   myUser = await accounts.getUser(req.params.userName)
-  
-  res.render('user',{data:myUser})
+  myPosts = await accounts.getPostsByUserId(myUser.userId)
+ 
+  res.render('user',{data:myUser , posts:myPosts})
 }
 
 //User ineractive pages
 async function doLogin(req,res){
 
   myUser = await accounts.getUserByEmail(req.body.email)
-  console.log(myUser)
   
   if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userId', `${myUser.userId}`)
-    res.cookie('userbio', `${myUser.userbio}`)
     res.cookie('userName', `${myUser.userName}`)
+
+    req.session.user = myUser
+
+    console.log("delta")
+    console.log(req.session.user)
 
     res.redirect(`/user/${myUser.userName}/feed`)
 
-  } else{res.redirect(`/login`)
+  } else {res.redirect(`/login`)
   console.log('login failed')
+  }
 }
 
+async function searchUser(req, res) {
+  user = await accounts.getUserByName(req.body.name)
+
+  res.redirect(`/user/${user.userName}/feed`)
 }
 
 async function doUpdateAccount (req,res){
@@ -47,20 +57,20 @@ async function doUpdateAccount (req,res){
     if (req.body.userName != null){myUser.userName = req.body.userName}
 
     myUser = await myUser.save()
-
-    res.send('slurped')
+    res.redirect(`/user/${myUser.userName}/feed`)
 }
 
 async function doPost (req,res){
 
-  /*var user = await User.findOne({
-    where: {userName: `${req.params.userName}`}
-  }).catch(errHand)
-*/
+  myUser = await accounts.getUser(req.params.userName)
+  console.log(myUser)
+
   const createPost = await Post.create({ 
     content: `${req.body.content}`, 
-    userId: `${user.doGetUser.userId}`,
+    userId: `${myUser.userId}`,
 }).catch(errHand)
+  
+  res.redirect(`/user/${myUser.userName}/feed`)
 
 }
 
@@ -170,7 +180,7 @@ async function createUser (req,res){
               newUser
                 .save()
                 .then(user => {
-                  res.redirect('/users/login');
+                  res.redirect('/login');
                 })
                 .catch(err => console.log(err));
             });
@@ -185,6 +195,7 @@ async function doExample (req,res){
     
         //function goes here
 
-    }    
+    }
+    
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio,userPage}
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser}

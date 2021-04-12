@@ -2,13 +2,15 @@
     <h1 class="display-3"><%- data.name %></h1>
     <p class="lead"><%- data.bio %></p>
     <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
     <p class="lead">
+    
     <a class="btn btn-primary btn-lg" href="/user/<%- data.userName %>/settings" role="button">Settings</a>
-    </p>
+    
+  </p>
 </div>
+
 <div class="form-group">
-  <form action="/user/<%-data.userName%>" method="POST">
+  <form action="/user/<%- data.userName %>" method="POST">
       <div class="form-group">
           <label for="content">post</label>
           <input
@@ -23,3 +25,12 @@
       </div>
   </form>
 </div>
+
+<% for( let post of posts || [] ){ %>
+  <div class="card text-white bg-primary mb-3" style="max-width: 20rem;">
+    <div class="card-header"><%-data.name%></div>
+    <div class="card-body">
+      <p class="card-text"><%=post.content%></p>
+    </div>
+  </div>
+<%} %>

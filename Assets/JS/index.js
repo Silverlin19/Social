@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 console.log("Hello there");
 console.log("General Kenobi!!!");
 
