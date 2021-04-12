@@ -80,7 +80,7 @@ app.post('/login', controller.doLogin)
 
 
 //Spotify API music section
-app.get('/Music' , (req,res) => {
+app.get('/user/:userName/Music' , (req,res) => {
     res.render('spot')
 })
 app.post('/login', controller.doLogin)
