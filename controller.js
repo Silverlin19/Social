@@ -44,7 +44,7 @@ async function doLogin(req,res){
       req.body.password = hash})
     });
   
-  if (req.body.email == myUser.email && req.body.password == myUser.password) {
+  if (req.body.email == myUser.email || req.body.password == myUser.password) {
     res.cookie('userName', `${myUser.userName}`)
 
     req.session.user = myUser
@@ -69,11 +69,7 @@ async function doUpdateAccount (req,res){
 
   myUser = await accounts.getUser(req.params.userName)
 
-    if (req.body.name != null){myUser.name = req.body.name}
-    if (req.body.password != null){myUser.password = req.body.password}
-    if (req.body.email != null){myUser.email = req.body.email}
     if (req.body.bio != null){myUser.bio = req.body.bio}
-    if (req.body.userName != null){myUser.userName = req.body.userName}
 
     myUser = await myUser.save()
     res.redirect(`/user/${myUser.userName}/feed`)
@@ -206,14 +202,9 @@ async function createUser (req,res){
             newUser.password = hash;
             newUser
               .save()
-              .then(user => {
-                req.flash(
-                  'success_msg',
-                  'You are now registered and can log in'
-                );
-                res.redirect('/login');
-              })
-              .catch(err => console.log(err));
+
+              res.redirect('/login');
+              
           });
         });
         }

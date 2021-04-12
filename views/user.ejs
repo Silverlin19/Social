@@ -1,6 +1,6 @@
 <div class="jumbotron">
-    <h1 class="display-3"><%if (nav == data.userName) {%><%- data.name%><%} else {%><%- data2.name%><%}%></h1>
-    <p class="lead"><%if (nav == data.userName) {%><%- data.bio%><%} else {%><%- data2.bio%><%}%></p>
+    <h1 class="display-3"><%if (nav == data.userName) {%><%- data.name%><%}%> <%if (nav !== data.userName){%><%- data2.name%><%}%></h1>
+    <p class="lead"><%if (nav == data.userName) {%><%-data.bio%><%} if(nav !== data.userName) {%><%- data2.bio%><%}%></p>
     <hr class="my-4">
     <p class="lead">
     <%if (nav == data.userName) {%>

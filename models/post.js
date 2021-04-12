@@ -12,5 +12,8 @@ module.exports = sequelize.define("Posts", {
         type: Sequelize.INTEGER(11),
         allownull: false
     },
-    content: Sequelize.STRING(500), 
+    content: {
+        type: Sequelize.STRING(500),
+        allowNull: false
+    } 
 })
