@@ -225,6 +225,14 @@ async function createUser (req,res){
 
 }
 
+async function deleteUser(req,res) {
+  myUser = await req.session.user
+  await User.destroy({
+    where: { userId: `${myUser.userId}`}
+  })
+}
+
+
 async function doExample (req,res){
     
         //function goes here
@@ -232,4 +240,4 @@ async function doExample (req,res){
     }
 
 
-module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser}
+module.exports = {  doLogin  , doUpdateAccount , showFollowed , doFollow, doPost, createUser , doGetBio , userPage , searchUser,deleteUser}
