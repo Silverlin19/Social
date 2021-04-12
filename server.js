@@ -2,30 +2,53 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const cors = require('cors')
-const session = require ('express-session')
+//cookiesValidation
+const expressSession = require('express-session');
+const SessionStore = require('express-session-sequelize')(expressSession.Store);
+// cookies end
+
 const helmet = require('helmet')
 require("./db")
 const expressLayouts = require('express-ejs-layouts')
 const controller = require('./controller')
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const sequelize = require('./db');
 const PORT = process.env.PORT || 6969
+
+ 
+const sequelizeSessionStore = new SessionStore({
+    db: sequelize,
+});
+
+// cookies end
+
+
 
 const app = express()
 
-app.use(session({
-    key: 'userId',
-    secret: 'delta',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {    
-    expires: 60*60*24*7
-    }
-}))
+// app.use(SessionStore({
+//     key: 'userId',
+//     secret: 'delta',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {    
+//     expires: 60*60*24*7
+//     }
+// }))
 app.use(cors({
     origin: ["http://localhost:6969"],
     methods: ["GET" , "POST"],
     credentials: true
 }))
+app.use(cookieParser());
+//cookies
+app.use(expressSession({
+        key: 'userId',
+    secret: 'delta',
+    store: sequelizeSessionStore,
+    resave: false,
+    saveUninitialized: false,
+}));//
 app.use(helmet())
 app.use(compression())
 app.use(bodyParser.urlencoded({extended:false}))
@@ -63,7 +86,7 @@ app.post('/login', controller.doLogin)
 
 
 //Spotify API music section
-app.get('/Music' , (req,res) => {
+app.get('/user/:userName/Music' , (req,res) => {
     res.render('spot')
 })
 app.post('/login', controller.doLogin)
