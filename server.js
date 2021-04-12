@@ -41,7 +41,7 @@ const app = express()
 app.use(function (req, res, next) {
   res.setHeader(
     'Content-Security-Policy-Report-Only',
-    "default-src 'self'; font-src 'self' https://use.fontawesome.com/releases/v5.6.3/css/all.css; img-src 'self' https://images.unsplash.com; script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js; style-src 'self' https://fonts.googleapis.com https://bootswatch.com/4/slate/bootstrap.min.css; frame-src 'self' https://www.youtube.com https://youtube.com;"
+    "default-src 'self'; font-src 'self' https://use.fontawesome.com/releases/v5.6.3/css/all.css; img-src 'self' https://images.unsplash.com; script-src 'self' https://apis.google.com/js/platform.js https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js https://apis.google.com/js/platform.js https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js; style-src 'self' https://fonts.googleapis.com https://bootswatch.com/4/slate/bootstrap.min.css; frame-src 'self' https://www.youtube.com https://youtube.com;"
   );
   next();
 });
