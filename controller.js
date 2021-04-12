@@ -121,6 +121,14 @@ async function doFollowUser (req,res){
       res.render('bio',{data:data})
   }
 
+async function postDelete(req,res){
+  myUser = await req.session.user
+  var deletePost = await Post.destroy({
+    where: {id: `${req.params.id}`}
+  })
+  res.redirect(`/user.${myUser.userName}`)
+}
+
 async function doFollow(req,res){
 
     var followPointer = await User.findOne({
